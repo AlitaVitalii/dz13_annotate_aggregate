@@ -45,4 +45,3 @@ class Store(models.Model):
         return ', '.join([books.name for books in self.books.all()[:3]])
 
     display_books.short_description = 'Books'
-

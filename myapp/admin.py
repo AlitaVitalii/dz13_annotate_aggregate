@@ -10,23 +10,39 @@ class AuthorAdmin(admin.ModelAdmin):
 
     fieldsets = [
         (None, {'fields': ['name']}),
-        ('Query', {'fields': ['age']}),
+        ('Age', {'fields': ['age']}),
     ]
+    list_per_page = 10
+    search_fields = ['name']
 
 
 @admin.register(Publisher)
 class PublisherAdmin(admin.ModelAdmin):
     list_display = ('name', )
-
-
-# admin.site.register(Store)
+    list_per_page = 10
+    search_fields = ['name']
 
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
     list_display = ('name', 'display_authors', 'pubdate')
+    list_per_page = 10
+    search_fields = ['name']
+    date_hierarchy = 'pubdate'
+
+    # fields = (('name', 'rating', 'pages'), 'price', 'authors', ('publisher', 'pubdate'))
+
+    fieldsets = [
+        ('Name', {'fields': ['name', 'rating', 'pages']}),
+        ('Price', {'fields': ['price']}),
+        ('Authors', {'fields': ['authors']}),
+        (None, {'fields': ['publisher', 'pubdate']}),
+    ]
 
 
 @admin.register(Store)
 class StoreAdmin(admin.ModelAdmin):
     list_display = ('name', 'display_books')
+    list_per_page = 10
+    search_fields = ['name']
+
