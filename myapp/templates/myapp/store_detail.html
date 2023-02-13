@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Store: {{ store }}</h1>
+
+<div style="margin-left:20px;margin-top:20px">
+<h4>Books:</h4>
+
+    <dl>
+    {% for book in store.books.all %}
+      <dt><a href="{% url 'book-detail' book.pk %}">{{book.name}} </a> ({{book.rating}})</dt>
+    {% endfor %}
+    </dl>
+
+</div>
+{% endblock %}

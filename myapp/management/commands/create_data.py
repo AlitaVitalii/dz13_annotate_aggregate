@@ -1,7 +1,5 @@
 import random
 
-from django.contrib.auth.hashers import make_password
-from django.contrib.auth.models import User
 from django.core.management.base import BaseCommand
 
 from faker import Faker
@@ -17,6 +15,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         fake = Faker()
+
         a = Author.objects.bulk_create([Author(
             name=fake.name(),
             age=random.randint(30, 70)
@@ -31,6 +30,11 @@ class Command(BaseCommand):
             pubdate=fake.date()
         ) for _ in range(options['numb'])])
 
+        # создаем связь автора с книгой
+        for i, book in enumerate(b):
+            book.authors.add(a[i])
+
+        # рандомно добавляем связи автор-книга
         for book in b:
             book.authors.add(random.choice(a))
 
@@ -38,6 +42,11 @@ class Command(BaseCommand):
             name=fake.company()
         ) for _ in range(options['numb'])])
 
+        # создаем связь
+        for i, store in enumerate(s):
+            store.books.add(b[i])
+
+        # рандомно добовляем книги в магазин
         for store in s:
             store.books.add(random.choice(b))
 

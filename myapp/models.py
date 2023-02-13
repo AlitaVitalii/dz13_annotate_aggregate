@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class Author(models.Model):
@@ -8,12 +9,18 @@ class Author(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('author-detail', args=[str(self.pk)])
+
 
 class Publisher(models.Model):
     name = models.CharField(max_length=300)
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('publisher-detail', args=[str(self.pk)])
 
 
 class Book(models.Model):
@@ -28,6 +35,9 @@ class Book(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('book-detail', args=[str(self.pk)])
+
     def display_authors(self):
         return ', '.join([authors.name for authors in self.authors.all()[:3]])
 
@@ -40,6 +50,9 @@ class Store(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('store-detail', args=[str(self.pk)])
 
     def display_books(self):
         return ', '.join([books.name for books in self.books.all()[:3]])

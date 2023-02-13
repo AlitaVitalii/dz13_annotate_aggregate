@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from myapp.models import Author, Publisher, Book, Store
+from myapp.models import Author, Book, Publisher, Store
 
 
 # Register your models here.
@@ -45,4 +45,3 @@ class StoreAdmin(admin.ModelAdmin):
     list_display = ('name', 'display_books')
     list_per_page = 10
     search_fields = ['name']
-
