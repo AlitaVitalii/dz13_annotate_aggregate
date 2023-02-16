@@ -22,7 +22,7 @@ class Command(BaseCommand):
         ) for _ in range(options['numb'])])
 
         b = Book.objects.bulk_create([Book(
-            name=fake.language_name(),
+            name=fake.street_name(),
             pages=random.randint(100, 500),
             price=random.randint(10, 1000),
             rating=random.randint(1, 10),
@@ -42,7 +42,7 @@ class Command(BaseCommand):
             name=fake.company()
         ) for _ in range(options['numb'])])
 
-        # создаем связь
+        # создаем связь книга-магазин
         for i, store in enumerate(s):
             store.books.add(b[i])
 

@@ -3,6 +3,11 @@ from django.contrib import admin
 from myapp.models import Author, Book, Publisher, Store
 
 
+class BookInline(admin.TabularInline):
+    model = Book
+    extra = 3
+
+
 # Register your models here.
 @admin.register(Author)
 class AuthorAdmin(admin.ModelAdmin):
@@ -21,6 +26,7 @@ class PublisherAdmin(admin.ModelAdmin):
     list_display = ('name', )
     list_per_page = 10
     search_fields = ['name']
+    inlines = [BookInline]
 
 
 @admin.register(Book)
@@ -29,6 +35,7 @@ class BookAdmin(admin.ModelAdmin):
     list_per_page = 10
     search_fields = ['name']
     date_hierarchy = 'pubdate'
+    list_filter = ['pubdate']
 
     # fields = (('name', 'rating', 'pages'), 'price', 'authors', ('publisher', 'pubdate'))
 

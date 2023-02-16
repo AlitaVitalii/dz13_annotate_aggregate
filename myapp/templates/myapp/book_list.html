@@ -11,22 +11,26 @@
     <th>Autor</th>
     <th>Rating</th>
     <th>Publisher</th>
+    <th>Store</th>
     <th>Price</th>
-  </tr>
+           </tr>
 
       {% for book in book_list %}
-
           <tr>
-        <td><a href="{{ book.get_absolute_url }}">{{ book.name }}</a> </td>
+              <td><a href="{{ book.get_absolute_url }}">{{ book.name }}</a> </td>
               <td>{{book.display_authors}} </td>
               <td>{{book.rating}}</td>
               <td>{{book.publisher}}</td>
-              <td>{{book.price}}$</td>
+              <td>
+                      {% for store in book.store_set.all %}
+                      <a href="{% url 'store-detail' store.pk %}">{{store}}</a>,
+                      {% endfor %}
+               </td>
+               <td>{{book.price}}$</td>
           </tr>
 
       {% endfor %}
-
-</table>
+      </table>
     </ul>
     {% else %}
       <p>There are no books in the library.</p>

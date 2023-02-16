@@ -5,13 +5,16 @@
 
     {% if publisher_list %}
     <ul>
-
-      {% for publisher in publisher_list %}
-      <li>
-        <a href="{{ publisher.get_absolute_url }}">{{ publisher.name }}</a>
-      </li>
-      {% endfor %}
-
+        <table>
+             <th>Publishers</th>
+             <th>Number of books</th>
+                {% for publisher in publisher_list %}
+                <tr>
+                    <td><a href="{{ publisher.get_absolute_url }}">{{ publisher.name }}</a>  </td>
+                    <td>{{publisher.num_book}}</td>
+                 </tr>
+                    {% endfor %}
+         </table>
     </ul>
     {% else %}
       <p>There are no publisher in the library.</p>

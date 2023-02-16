@@ -5,15 +5,21 @@
 
     {% if author_list %}
     <ul>
-
+        <table>
+             <th>Author</th>
+             <th>Age</th>
+             <th>Rating</th>
       {% for author in author_list %}
-      <li>
-        <a href="{{ author.get_absolute_url }}">{{ author.name }}</a>( Age:{{author.age}})
-      </li>
+             <tr>
+                <td><a href="{{ author.get_absolute_url }}">{{ author.name}}</a></td>
+                <td>  {{author.age}} </td>
+                <td>  {{ author.avg_rating }}</td>
+             </tr>
       {% endfor %}
-
+        </table>
     </ul>
     {% else %}
       <p>There are no authors in the library.</p>
     {% endif %}
+
 {% endblock %}

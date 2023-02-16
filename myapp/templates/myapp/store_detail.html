@@ -7,9 +7,9 @@
 <h4>Books:</h4>
 
     <dl>
-    {% for book in store.books.all %}
-      <dt><a href="{% url 'book-detail' book.pk %}">{{book.name}} </a> ({{book.rating}})</dt>
-    {% endfor %}
+        {% for book in store.books.all %}
+          <dt><a href="{% url 'book-detail' book.pk %}">{{book.name}} </a> (Rating: {{book.rating}})</dt>
+        {% endfor %}
     </dl>
 
 </div>

@@ -5,13 +5,22 @@
 
     {% if store_list %}
     <ul>
-
-      {% for store in store_list %}
-      <li>
-        <a href="{{ store.get_absolute_url }}">{{store.name }}</a>
-      </li>
-      {% endfor %}
-
+        <table>
+             <th>Stores</th>
+             <th>Number of books</th>
+             <th>Maximum price</th>
+             <th>Minimum price</th>
+             <th>Mid price</th>
+                  {% for store in store_list %}
+                  <tr>
+                      <td><a href="{{ store.get_absolute_url }}">{{store.name }} </a> </td>
+                      <td>{{store.num_book}}</td>
+                      <td>{{store.max_price}} $</td>
+                      <td>{{store.min_price}} $</td>
+                      <td>{{store.avg_price}} $</td>
+                  </tr>
+                  {% endfor %}
+        </table>
     </ul>
     {% else %}
       <p>There are no store in the library.</p>
