@@ -4,11 +4,18 @@
   <h1>Publisher: {{ publisher }}</h1>
 
     <div style="margin-left:20px;margin-top:20px">
-    <h4>Books:</h4>
+    <h4>Books: {{ publisher.num_books }} pc.</h4>
+
+         <ul>
+            <li> <strong>  Mid price: </strong>{{ publisher.avg_price }} $</li>
+            <li> <strong>  Maximum price: </strong>{{ publisher.min_price }} $</li>
+            <li> <strong>  Minimum price: </strong>{{ publisher.max_price }} $</li>
+        </ul>
 
         <dl>
             {% for book in publisher.book_set.all %}
-              <dt><a href="{% url 'book-detail' book.pk %}">{{book}}</a> ({{book.rating}})</dt>
+              <dt><a href="{% url 'book-detail' book.pk %}">{{book}}</a>
+                  ({{book.rating}}) - {{ book.price }}$</dt>
             {% endfor %}
         </dl>
 
