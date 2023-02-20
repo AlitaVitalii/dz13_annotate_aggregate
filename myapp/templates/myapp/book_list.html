@@ -1,6 +1,14 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
+
+    <ul class="sidebar-nav">
+...
+        {% if user.is_authenticated %}
+            <li><a href="{% url 'book_create' %}">book_create</a></li>
+        {% endif %}
+
+    </ul>
 <h1>Book List</h1>
 
     {% if book_list %}

@@ -35,6 +35,9 @@ class Book(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        permissions = (("can_mark_returned", "Set book as returned"),)
+
     def get_absolute_url(self):
         return reverse('book-detail', args=[str(self.pk)])
 

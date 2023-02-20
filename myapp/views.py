@@ -1,6 +1,9 @@
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.db.models import Avg, Max, Min, Sum, Count
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views import generic
+from django.views.generic import CreateView, UpdateView, DeleteView
 
 from myapp.models import Book, Author, Publisher, Store
 
@@ -8,7 +11,7 @@ from myapp.models import Book, Author, Publisher, Store
 def index(request):
     num_books = Book.objects.count()
     num_authors = Author.objects.count()
-    num_publisher = Publisher.objects.all().count()
+    num_publisher = Publisher.objects.count()
     num_store = Store.objects.count()
     aggr_books = Book.objects.aggregate(Avg('price'), Max('price'), Min('price'))
     avg_p, max_p, min_p = round(aggr_books['price__avg'], 2), aggr_books['price__max'], aggr_books['price__min']
@@ -97,3 +100,21 @@ class StoreDetailView(generic.DetailView):
         min_price=Min('books__price'),
         max_price=Max('books__price'),
     ).prefetch_related('books')
+
+
+class BookCreate(PermissionRequiredMixin, CreateView):
+    model = Book
+    fields = ['name', 'pages', 'price', 'rating', 'authors', "publisher", 'pubdate']
+    permission_required = 'myapp.can_mark_returned'
+
+
+class BookUpdate(PermissionRequiredMixin, UpdateView):
+    model = Book
+    fields = ['name', 'pages', 'price', 'rating', 'authors', "publisher", 'pubdate']
+    permission_required = 'myapp.can_mark_returned'
+
+
+class BookDelete(PermissionRequiredMixin, DeleteView):
+    model = Book
+    success_url = reverse_lazy('books')
+    permission_required = 'myapp.can_mark_returned'

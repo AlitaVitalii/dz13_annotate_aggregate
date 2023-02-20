@@ -3,6 +3,18 @@
 {% block content %}
   <h1>Title: {{ book.name }}</h1>
 
+
+    <ul class="sidebar-nav">
+
+        {% if user.is_authenticated %}
+            <li><a href="{% url 'book_create' %}">book_create</a></li>
+            <li><a href="{% url 'book_update' book.pk %}">book_update</a></li>
+            <li><a href="{% url 'book_delete' book.pk %}">book_delete</a></li>
+        {% endif %}
+
+    </ul>
+
+
   <p><strong>Author: </strong>
           {% for author in book.authors.all %}
           <a href="{% url 'author-detail' author.pk %}">{{ author }}</a>,
