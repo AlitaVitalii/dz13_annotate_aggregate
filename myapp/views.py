@@ -1,3 +1,5 @@
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.db.models import Avg, Max, Min, Sum, Count
 from django.shortcuts import render
@@ -8,6 +10,7 @@ from django.views.generic import CreateView, UpdateView, DeleteView
 from myapp.models import Book, Author, Publisher, Store
 
 
+# @cache_page(10)
 def index(request):
     num_books = Book.objects.count()
     num_authors = Author.objects.count()
@@ -32,9 +35,10 @@ def index(request):
     )
 
 
+@method_decorator(cache_page(10), name='get')
 class BookListView(generic.ListView):
     model = Book
-    paginate_by = 10
+    paginate_by = 500
     queryset = Book.objects.prefetch_related('authors', 'store_set').select_related('publisher').order_by('name')
 
 
@@ -43,9 +47,10 @@ class BookDetailView(generic.DetailView):
     queryset = Book.objects.prefetch_related('authors').order_by('name')
 
 
+@method_decorator(cache_page(10), name='get')
 class AuthorListView(generic.ListView):
     model = Author
-    paginate_by = 10
+    paginate_by = 500
     queryset = Author.objects.annotate(
         avg_rating=Avg('book__rating')
     ).prefetch_related('book_set').order_by('name')
@@ -62,9 +67,10 @@ class AuthorDetailView(generic.DetailView):
         ).prefetch_related('book_set')
 
 
+@method_decorator(cache_page(10), name='get')
 class PublisherListView(generic.ListView):
     model = Publisher
-    paginate_by = 10
+    paginate_by = 500
     queryset = Publisher.objects.annotate(
         num_book=Count('book')
     ).prefetch_related('book_set').order_by('name')
@@ -81,9 +87,10 @@ class PublisherDetailView(generic.DetailView):
     ).prefetch_related('book_set')
 
 
+@method_decorator(cache_page(10), name='get')
 class StoreListView(generic.ListView):
     model = Store
-    paginate_by = 10
+    paginate_by = 500
     queryset = Store.objects.annotate(
         num_book=Count('books'),
         avg_price=Avg('books__price'),

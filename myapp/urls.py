@@ -2,9 +2,11 @@ from django.urls import path
 
 from . import views
 
+from django.views.decorators.cache import cache_page
+
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', cache_page(10)(views.index), name='index'),
     path('book/', views.BookListView.as_view(), name='books'),
     path('book/<int:pk>/', views.BookDetailView.as_view(), name='book-detail'),
     path('author/', views.AuthorListView.as_view(), name='authors'),
